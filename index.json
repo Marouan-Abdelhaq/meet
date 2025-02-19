@@ -1,0 +1,61 @@
+{
+    "events": [
+      {
+        "id": 1,
+        "title": "L'exposition «CoBrA : Un serpent à multiples têtes»",
+        "start_date": "2025-02-18",
+        "end_date": "2025-04-30",
+        "price" : "25 MAD",
+        "event_type": "Museum",
+        "subType": "Exposition",
+        "description": "L’exposition «Cobra : un serpent à multiples têtes» s’est ouverte au Musée Mohammed VI d’art moderne et contemporain de Rabat (MMVI), dans le cadre du dixième anniversaire de l’institution muséale.",
+        "organizer": "Fondation nationale des musées",
+        "phone": "+212 (0) 5 30 67 60 81",
+        "email": "info@fnm.com",
+        "venue":"2 Av. Moulay Hassan",
+        "city":"Rabat",
+        "start_time": "09:00",
+        "end_time": "18:00",
+        "image_url": "https://www.lavieeco.com/wp-content/uploads/2024/11/slider_1730375421Capture-decran-2024-10-31-a-12.47.02-1.png",
+        "profile": "https://www.lavieeco.com/wp-content/uploads/2024/11/slider_1730375421Capture-decran-2024-10-31-a-12.47.02-1.png"
+      },
+      {
+        "id": 2,
+        "title": "Exposition inaugurale des Oudayas",
+        "start_date": "2025-01-18",
+        "end_date": "2025-03-30",
+        "price" : "20 MAD",
+        "event_type": "Museum",
+        "subType": "Exposition",
+        "description": "L’exposition permanente du musée est dédiée au thème de la parure, qui constitue un des aspects importants de la culture marocaine. Connu par sa richesse et sa diversité manifestées à travers les formes produites, les matières utilisées et les techniques mises en oeuvre, l’art de la parure marocaine revêt une valeur culturelle importante. Il est attribué en tant que moyen de mise en avant d’une esthétique corporelle et vecteur d’une protection supposée.",
+        "organizer": "Fondation nationale des musées",
+        "phone": "+212 (0) 5 30 67 60 81",
+        "email": "info@fnm.com",
+        "venue":"Oudayas, musée National de la Parure",
+        "city":"Rabat",
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "image_url": "https://fnm.ma/wp-content/uploads/2023/01/Instagram_muse%C2%A6ue-oudayas_1080-x-1080px-1024x1024.png",
+        "profile": "https://fnm.ma/wp-content/uploads/2023/01/Instagram_muse%C2%A6ue-oudayas_1080-x-1080px-1024x1024.png"
+      },
+      {
+        "id": 3,
+        "title": "L'exposition Routes des empereurs romains à travers la Serbie, VIMINCIUM",
+        "start_date": "2025-02-18",
+        "end_date": "2025-05-30",
+        "price" : "20 MAD",
+        "event_type": "Museum",
+        "subType": "Exposition",
+        "description": "Le projet intitulé « Itinerarium Romanum Serbiae » ou « Route des empereurs romains en Serbie » a été lancé récemment, pour relier tous leurs lieux de naissance, sites, d’une importance historique et archéologique incommensurable. La Route des empereurs romains devrait relier tous les lieux au riche patrimoine antique pour constituer un itinéraire culturel de plus de 600 km de long et les utiliser comme une ressource pour améliorer le tourisme culturel. Ils représentent non seulement l’héritage de la Serbie, mais aussi celui de l’Europe et du monde.",
+        "organizer": "Fondation nationale des musées",
+        "phone": "+212 (0) 5 30 67 60 81",
+        "email": "info@fnm.com",
+        "venue":"Musée de l'histoire et des civilisations, v. Moulay Abdelaziz, Rabat",
+        "city":"Rabat",
+        "start_time": "09:00",
+        "end_time": "18:00",
+        "image_url": "http://www.rabat.mfa.gov.rs/odrzavanje/uploads/DSC_0032_-_amb_-_govor_final.JPG",
+        "profile": "http://www.rabat.mfa.gov.rs/odrzavanje/uploads/DSC_0032_-_amb_-_govor_final.JPG"
+      }
+    ]
+}

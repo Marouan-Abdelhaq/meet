@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Événements</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10">
+        <h1 class="text-3xl font-semibold mb-8">Nos Événements</h1>
+        <div id="events-container" class="flex flex-wrap justify-center gap-6">
+            <!-- Les cartes d'événements seront injectées ici -->
+        </div>
+    </div>
+
+    <script>
+        // Votre JSON avec les événements
+        const events = [
+            {
+                "id": 1,
+                "title": "Conférence sur l'IA",
+                "start_date": "2024-01-01",
+                "end_date": "2024-01-02",
+                "price": "100 MAD",
+                "eventType": "Conférence",
+                "subType": "Intelligence Artificielle",
+                "description": "Une conférence passionnante sur l'intelligence artificielle et ses applications.",
+                "organizer": "John Doe",
+                "phone": "+212 123 456 789",
+                "email": "johndoe@example.com",
+                "venue": "Stade de Rabat",
+                "city": "Rabat",
+                "start_time": "09:00",
+                "end_time": "17:00",
+                "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+            },
+            {
+                "id": 2,
+                "title": "Exposition d'Art Moderne",
+                "start_date": "2024-02-15",
+                "end_date": "2024-02-22",
+                "price": "50 MAD",
+                "eventType": "Exposition",
+                "subType": "Art Moderne",
+                "description": "Découvrez les dernières œuvres d'art contemporain dans un cadre unique.",
+                "organizer": "Jane Smith",
+                "phone": "+212 987 654 321",
+                "email": "janesmith@example.com",
+                "venue": "Musée d'Art Moderne",
+                "city": "Casablanca",
+                "start_time": "10:00",
+                "end_time": "18:00",
+                "image": "https://images.unsplash.com/photo-1506748686218-67e1f9ad7d78?auto=format&fit=crop&w=1471&q=80"
+            }
+        ];
+
+        // Fonction pour générer les cartes d'événements
+        function generateCards(events) {
+            const container = document.getElementById('events-container');
+            events.forEach(event => {
+                const card = document.createElement('a');
+                card.href = `event-detail.html?id=${event.id}`;
+                card.classList.add('relative', 'flex', 'flex-col', 'my-6', 'bg-white', 'shadow-sm', 'border', 'border-slate-200', 'rounded-lg', 'w-96');
+
+                card.innerHTML = `
+                    <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                        <img src="${event.image}" alt="card-image" />
+                    </div>
+                    <div class="p-4">
+                        <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+                            ${event.eventType}
+                        </div>
+                        <h6 class="mb-2 text-slate-800 text-xl font-semibold">${event.title}</h6>
+                        <p class="text-slate-600 leading-normal font-light">${event.description}</p>
+                    </div>
+                    <div class="flex items-center justify-between p-4">
+                        <div class="flex flex-col ml-3 text-sm">
+                            <span class="text-slate-800 font-semibold">${event.organizer}</span>
+                            <span class="text-slate-600">Prix : ${event.price}</span>
+                            <span class="text-slate-600">Du ${event.start_date} au ${event.end_date}</span>
+                            <span class="text-slate-600">Horaires : ${event.start_time} - ${event.end_time}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Appeler la fonction pour générer les cartes d'événements
+        generateCards(events);
+    </script>
+</body>
+
+</html>

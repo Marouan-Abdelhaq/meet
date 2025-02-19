@@ -1,0 +1,161 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    background-image: linear-gradient(rgba(245, 245, 245, 1), rgba(245, 245, 245, 1)) !important;
+}
+.header {
+    position: relative;
+    height: 100vh;
+    background: url('bg.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+.header-content {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    max-width: 800px;
+}
+.navbar {
+    transition: background-color 0.4s ease-in-out;
+}
+.navbar-transparent {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+.navbar-solid {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+}
+.navbar-nav .nav-item .nav-link {
+    color: white !important;
+    font-size: 1.2rem;
+}
+.navbar-nav .nav-item .nav-link:hover {
+    color: #f8f9fa !important;
+    text-decoration: underline;
+}
+.title-card {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: black;
+}
+#events {
+    padding: 2rem;
+    background-image: linear-gradient(rgba(245, 245, 245, 1), rgba(245, 245, 245, 1)) !important;
+}
+
+.wrapper {
+display: inline-flex;
+list-style: none;
+height: 120px;
+width: 100%;
+padding-top: 40px;
+font-family: "Poppins", sans-serif;
+justify-content: center;
+}
+
+.wrapper .icon {
+position: relative;
+border-radius: 50%;
+margin: 10px;
+width: 50px;
+height: 50px;
+font-size: 18px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip {
+position: absolute;
+top: 0;
+font-size: 14px;
+background: #fff;
+color: #fff;
+padding: 5px 8px;
+border-radius: 5px;
+box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+opacity: 0;
+pointer-events: none;
+transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip::before {
+position: absolute;
+content: "";
+height: 8px;
+width: 8px;
+background: #fff;
+bottom: -3px;
+left: 50%;
+transform: translate(-50%) rotate(45deg);
+transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+top: -45px;
+opacity: 1;
+visibility: visible;
+pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+background: #1877f2;
+color: #fff;
+}
+
+.wrapper .twitter:hover,
+.wrapper .twitter:hover .tooltip,
+.wrapper .twitter:hover .tooltip::before {
+background: #1da1f2;
+color: #fff;
+}
+
+.wrapper .instagram:hover,
+.wrapper .instagram:hover .tooltip,
+.wrapper .instagram:hover .tooltip::before {
+background: #e4405f;
+color: #fff;
+}
+#typ{
+color: black;
+}
+.font-orbitron {
+font-family: 'Orbitron', sans-serif;
+}
+@keyframes float {
+0%, 100% {
+transform: translateY(0);
+}
+50% {
+transform: translateY(-5px);
+}
+}
+
+.float-animation {
+animation: float 2s infinite ease-in-out;
+}
