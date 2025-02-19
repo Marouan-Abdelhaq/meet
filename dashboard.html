@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script defer src="dashboard.js"></script> <!-- Link to JavaScript -->
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-image: linear-gradient(rgba(245, 245, 245, 1), rgba(245, 245, 245, 1)) !important;
+        }
+        .navbar-transparent {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        .navbar-solid {
+            background-color: rgba(0, 0, 0, 0.9) !important;
+        }
+        .navbar-nav .nav-item .nav-link {
+            color: white !important;
+            font-size: 1.2rem;
+        }
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #f8f9fa !important;
+            text-decoration: underline;
+        }
+        .navbar { background-color: #1E40AF; }
+        .dropdown-content {
+            display: none;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        /* TITRE ET BARRE DE CATÉGORIES */
+#header {
+    z-index: 10;
+}
+#navbar {
+    z-index: 20;
+}
+/* From Uiverse.io by david-mohseni */ 
+.wrapper {
+  display: inline-flex;
+  list-style: none;
+  height: 120px;
+  width: 100%;
+  padding-top: 40px;
+  font-family: "Poppins", sans-serif;
+  justify-content: center;
+}
+
+.wrapper .icon {
+  position: relative;
+  border-radius: 50%;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip {
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  background: #fff;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #fff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+  background: #1877f2;
+  color: #fff;
+}
+
+.wrapper .twitter:hover,
+.wrapper .twitter:hover .tooltip,
+.wrapper .twitter:hover .tooltip::before {
+  background: #1da1f2;
+  color: #fff;
+}
+
+.wrapper .instagram:hover,
+.wrapper .instagram:hover .tooltip,
+.wrapper .instagram:hover .tooltip::before {
+  background: #e4405f;
+  color: #fff;
+}
+.font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.float-animation {
+  animation: float 2s infinite ease-in-out;
+}
+    </style>
+
+</head>
+        <body class="bg-gray-100">
+            <!-- Navbar -->
+            <nav class="navbar fixed top-0 left-0 right-0 z-10 transition-all ease-in-out duration-300 navbar-transparent w-full px-4 py-3 bg-blue-600" id="navbar">
+                <div class="container mx-auto flex justify-between items-center">
+                    <!-- Logo et champ de recherche -->
+                    <div class="flex items-center space-x-10">
+                      <a class="text-white text-lg font-semibold" href="#">Mon Site</a>
+                        <h1>Welcome, <span id="username">[Loading...]</span></h1>
+                        
+                       <a href="/">Logout</a>
+                        <input type="text" placeholder="Rechercher..." class="px-3 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <img id="profile-pic" src="" alt="Profile Picture" width="100">
+                    </div>
+            
+                    <!-- Menu pour écrans larges -->
+                    <div id="navbarNav" class="lg:flex hidden space-x-4">
+                        <ul class="flex space-x-4">
+                            <li><a class="text-white hover:text-gray-300" href="#">Accueil</a></li>
+                            <li class="relative group">
+                                <a class="text-white hover:text-gray-300 cursor-pointer">Catégories des Villes</a>
+                                <!-- Dropdown -->
+                                <ul id="ville-menu" class="absolute left-0 hidden mt-2 w-40 bg-white shadow-md rounded-md z-20">
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-200" onclick="choisirVille('Rabat')">Rabat</a></li>
+                                    <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-200" onclick="choisirVille('Salé')">Salé</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="text-white hover:text-gray-300" href="#">Contact</a></li>
+                        </ul>
+                    </div>
+            
+                    <!-- Bouton Menu Mobile -->
+                    <button class="lg:hidden text-white focus:outline-none" id="navbar-toggle" aria-label="Ouvrir le menu">
+                        <span class="block w-6 h-1 bg-white mb-1"></span>
+                        <span class="block w-6 h-1 bg-white mb-1"></span>
+                        <span class="block w-6 h-1 bg-white"></span>
+                    </button>
+                </div>
+            </nav>
+        
+            <!-- Menu Mobile -->
+        <div id="mobile-menu" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-20 hidden transition-all duration-300">
+            <div class="bg-white w-80 h-full p-6 transform transition-transform duration-300 -translate-x-full">
+                <!-- Bouton Fermer -->
+                <button id="close-mobile-menu" class="text-gray-700 hover:text-blue-600 mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+        
+                <!-- Liens du menu -->
+                <ul class="space-y-4">
+                    <li><a class="text-gray-700 hover:text-blue-600 block" href="index.html">Accueil</a></li>
+                    <li>
+                        <a id="mobile-menu-categorie" class="text-gray-700 hover:text-blue-600 block cursor-pointer">
+                            Catégories des Villes
+                        </a>
+                        <!-- Sous-menu des villes -->
+                        <ul id="mobile-ville-menu" class="mt-2 ml-4 hidden space-y-2">
+                            <li><a href="#" class="text-gray-700 hover:text-blue-600 block" onclick="choisirVille('Rabat')">Rabat</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-blue-600 block" onclick="choisirVille('Salé')">Salé</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+            
+            <!-- TITRE ET BARRE DE CATÉGORIES -->
+            <div class="bg-white shadow-md mt-[60px] sticky top-14 py-6" id="header">
+                <div class="container mx-auto text-center">
+                    <h1 class="text-3xl font-semibold text-gray-800">Découvrez Nos Événements</h1>
+                    <p class="text-gray-600 mt-2">Choisissez une catégorie pour filtrer les événements</p>
+            
+                    <div class="mt-4 flex flex-wrap justify-center gap-4">
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Tous</button>
+                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition">Conférences</button>
+                        <button class="px-4 py-2 bg-gray-200 text-gray -700 rounded-md hover:bg-gray-300 transition">Concerts</button>
+                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition">Ateliers</button>
+                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition">Sport</button>
+                    </div>
+                </div>
+            </div>
+            
+        
+        
+                
+                <div class="container mx-auto text-white mt-0" id="events">
+                    <div class="container mx-auto flex flex-wrap justify-between items-center gap-4 ">
+                        <a href="javascript:void(0)">
+                            <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                              <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="card-image" />
+                              </div>
+                              <div class="p-4">
+                                <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+                                  POPULAR
+                                </div>
+                                <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                                  Website Review Check
+                                </h6>
+                                <p class="text-slate-600 leading-normal font-light">
+                                  The place is close to Barceloneta Beach and bus stop just 2 min by walk
+                                  and near to &quot;Naviglio&quot; where you can enjoy the main night life in
+                                  Barcelona.
+                                </p>
+                              </div>
+                           
+                              <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center">
+                                  <img
+                                    alt="Tania Andrew"
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+                                    class="relative inline-block h-8 w-8 rounded-full"
+                                  />
+                                  <div class="flex flex-col ml-3 text-sm">
+                                    <span class="text-slate-800 font-semibold">Lewis Daniel</span>
+                                    <span class="text-slate-600">
+                                      January 10, 2024
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </a>
+                          <a href="javascript:void(0)">
+                            <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                              <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="card-image" />
+                              </div>
+                              <div class="p-4">
+                                <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+                                  POPULAR
+                                </div>
+                                <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                                  Website Review Check
+                                </h6>
+                                <p class="text-slate-600 leading-normal font-light">
+                                  The place is close to Barceloneta Beach and bus stop just 2 min by walk
+                                  and near to &quot;Naviglio&quot; where you can enjoy the main night life in
+                                  Barcelona.
+                                </p>
+                              </div>
+                           
+                              <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center">
+                                  <img
+                                    alt="Tania Andrew"
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+                                    class="relative inline-block h-8 w-8 rounded-full"
+                                  />
+                                  <div class="flex flex-col ml-3 text-sm">
+                                    <span class="text-slate-800 font-semibold">Lewis Daniel</span>
+                                    <span class="text-slate-600">
+                                      January 10, 2024
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </a>
+                          <a href="javascript:void(0)">
+                            <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                              <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="card-image" />
+                              </div>
+                              <div class="p-4">
+                                <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+                                  POPULAR
+                                </div>
+                                <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                                  Website Review Check
+                                </h6>
+                                <p class="text-slate-600 leading-normal font-light">
+                                  The place is close to Barceloneta Beach and bus stop just 2 min by walk
+                                  and near to &quot;Naviglio&quot; where you can enjoy the main night life in
+                                  Barcelona.
+                                </p>
+                              </div>
+                           
+                              <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center">
+                                  <img
+                                    alt="Tania Andrew"
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+                                    class="relative inline-block h-8 w-8 rounded-full"
+                                  />
+                                  <div class="flex flex-col ml-3 text-sm">
+                                    <span class="text-slate-800 font-semibold">Lewis Daniel</span>
+                                    <span class="text-slate-600">
+                                      January 10, 2024
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </a>
+                          <a href="javascript:void(0)">
+                            <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                              <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="card-image" />
+                              </div>
+                              <div class="p-4">
+                                <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+                                  POPULAR
+                                </div>
+                                <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                                  Website Review Check
+                                </h6>
+                                <p class="text-slate-600 leading-normal font-light">
+                                  The place is close to Barceloneta Beach and bus stop just 2 min by walk
+                                  and near to &quot;Naviglio&quot; where you can enjoy the main night life in
+                                  Barcelona.
+                                </p>
+                              </div>
+                           
+                              <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center">
+                                  <img
+                                    alt="Tania Andrew"
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+                                    class="relative inline-block h-8 w-8 rounded-full"
+                                  />
+                                  <div class="flex flex-col ml-3 text-sm">
+                                    <span class="text-slate-800 font-semibold">Lewis Daniel</span>
+                                    <span class="text-slate-600">
+                                      January 10, 2024
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </a>
+                          <a href="javascript:void(0)">
+                            <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                              <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="card-image" />
+                              </div>
+                              <div class="p-4">
+                                <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+                                  POPULAR
+                                </div>
+                                <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                                  Website Review Check
+                                </h6>
+                                <p class="text-slate-600 leading-normal font-light">
+                                  The place is close to Barceloneta Beach and bus stop just 2 min by walk
+                                  and near to &quot;Naviglio&quot; where you can enjoy the main night life in
+                                  Barcelona.
+                                </p>
+                              </div>
+                           
+                              <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center">
+                                  <img
+                                    alt="Tania Andrew"
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+                                    class="relative inline-block h-8 w-8 rounded-full"
+                                  />
+                                  <div class="flex flex-col ml-3 text-sm">
+                                    <span class="text-slate-800 font-semibold">Lewis Daniel</span>
+                                    <span class="text-slate-600">
+                                      January 10, 2024
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </a>
+                          <a href="javascript:void(0)">
+                            <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                              <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="card-image" />
+                              </div>
+                              <div class="p-4">
+                                <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+                                  POPULAR
+                                </div>
+                                <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                                  Website Review Check
+                                </h6>
+                                <p class="text-slate-600 leading-normal font-light">
+                                  The place is close to Barceloneta Beach and bus stop just 2 min by walk
+                                  and near to &quot;Naviglio&quot; where you can enjoy the main night life in
+                                  Barcelona.
+                                </p>
+                              </div>
+                           
+                              <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center">
+                                  <img
+                                    alt="Tania Andrew"
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+                                    class="relative inline-block h-8 w-8 rounded-full"
+                                  />
+                                  <div class="flex flex-col ml-3 text-sm">
+                                    <span class="text-slate-800 font-semibold">Lewis Daniel</span>
+                                    <span class="text-slate-600">
+                                      January 10, 2024
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </a>
+                    </div>
+                   </div>
+            <!-- FOOTER -->
+            <footer class="w-full py-14 bg-gray-900 text-white text-center">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl mx-auto">
+                        <a href="index.html" class="flex justify-center font-orbitron text-white hover:text-gray-500 text-2xl float-animation"> 1337MEETS </a>
+                        <ul class="text-lg flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-16 mb-10 border-b border-gray-200">
+                            <li><a href="#" class="text-gray-200 hover:text-gray-500">Événements</a></li>
+                            <li><a href="#" class=" text-gray-200 hover:text-gray-500">Type</a></li>
+                            <li><a href="#" class=" text-gray-200 hover:text-gray-500">But</a></li>
+                            <li><a href="#" class=" text-gray-200 hover:text-gray-500">Rejoindre</a></li>
+                        </ul>
+                        <div class="flex space-x-10 justify-center items-center mb-14">
+                                <!-- From Uiverse.io by david-mohseni --> 
+                            <ul class="wrapper">
+                                <li class="icon facebook">
+                                    <span class="tooltip">Facebook</span>
+                                    <svg viewBox="0 0 320 512" height="1.2em" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path>
+                                    </svg>
+                                </li>
+                                <li class="icon twitter">
+                                    <span class="tooltip">Twitter</span>
+                                    <svg height="1.8em" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" class="twitter">
+                                        <path d="M42,12.429c-1.323,0.586-2.746,0.977-4.247,1.162c1.526-0.906,2.7-2.351,3.251-4.058c-1.428,0.837-3.01,1.452-4.693,1.776C34.967,9.884,33.05,9,30.926,9c-4.08,0-7.387,3.278-7.387,7.32c0,0.572,0.067,1.129,0.193,1.67c-6.138-0.308-11.582-3.226-15.224-7.654c-0.64,1.082-1,2.349-1,3.686c0,2.541,1.301,4.778,3.285,6.096c-1.211-0.037-2.351-0.374-3.349-0.914c0,0.022,0,0.055,0,0.086c0,3.551,2.547,6.508,5.923,7.181c-0.617,0.169-1.269,0.263-1.941,0.263c-0.477,0-0.942-0.054-1.392-0.135c0.94,2.902,3.667,5.023,6.898,5.086c-2.528,1.96-5.712,3.134-9.174,3.134c-0.598,0-1.183-0.034-1.761-0.104C9.268,36.786,13.152,38,17.321,38c13.585,0,21.017-11.156,21.017-20.834c0-0.317-0.01-0.633-0.025-0.945C39.763,15.197,41.013,13.905,42,12.429"></path>
+                                    </svg>
+                                </li>
+                                <li class="icon instagram">
+                                    <span class="tooltip">Instagram</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"></path>
+                                    </svg>
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="text-lg text-gray-500 text-center block">©<a href="https://pagedone.io/">1337meets</a> 2025, All rights reserved.</span>
+                    </div>
+                </div>
+            </footer>
+        <!-- JAVASCRIPT POUR CHANGER LA NAVBAR LORS DU SCROLL -->
+        <script>
+            window.addEventListener('scroll', function () {
+                let navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.remove('navbar-transparent');
+                    navbar.classList.add('navbar-solid');
+                } else {
+                    navbar.classList.remove('navbar-solid');
+                    navbar.classList.add('navbar-transparent');
+                }
+            });
+            document.querySelector('.group > a').addEventListener('click', function(event) {
+                event.preventDefault();
+                document.getElementById('ville-menu').classList.toggle('hidden');
+            });
+        
+            function choisirVille(ville) {
+                console.log("Ville choisie :", ville);
+                document.getElementById('ville-menu').classList.add('hidden');
+            }
+        
+            // Fermer le menu si on clique ailleurs
+            document.addEventListener('click', function(event) {
+                let menu = document.getElementById('ville-menu');
+                let menuButton = document.querySelector('.group > a');
+                if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
+            // Sélectionner les éléments
+        const menuToggle = document.getElementById('navbar-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenu = document.getElementById('close-mobile-menu');
+        const mobileMenuContent = mobileMenu.querySelector('div'); // Contenu du menu mobile
+        const mobileMenuCategorie = document.getElementById('mobile-menu-categorie');
+        const mobileVilleMenu = document.getElementById('mobile-ville-menu');
+        
+        // Afficher le menu mobile
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden'); // Affiche le fond semi-transparent
+            mobileMenuContent.classList.remove('-translate-x-full'); // Fait glisser le menu
+        });
+        
+        // Fermer le menu mobile
+        closeMenu.addEventListener('click', () => {
+            mobileMenuContent.classList.add('-translate-x-full'); // Cache le menu
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden'); // Cache le fond semi-transparent après l'animation
+            }, 300); // Correspond à la durée de l'animation
+        });
+        
+        // Afficher/Cacher le sous-menu des villes dans le menu mobile
+        mobileMenuCategorie.addEventListener('click', (event) => {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            mobileVilleMenu.classList.toggle('hidden'); // Affiche ou cache le sous-menu
+        });
+        
+        // Fermer le menu si on clique en dehors
+        mobileMenu.addEventListener('click', (event) => {
+            if (event.target === mobileMenu) {
+                mobileMenuContent.classList.add('-translate-x-full'); // Cache le menu
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden'); // Cache le fond semi-transparent après l'animation
+                }, 300);
+            }
+});
+</script>
+</body>
+</html>
