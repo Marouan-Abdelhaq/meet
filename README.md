@@ -20,34 +20,6 @@
 - **JSON** : Format de données utilisé pour l'échange d'informations entre le frontend et le backend.
 - **SQLite** : Base de données légère pour gérer les événements et les données des utilisateurs de manière efficace.
 
-## Structure du projet
-
-Voici l'architecture du projet **1337meets** :
-
-1337meets/
-
-  ├── index.html
-
-  ├── styles/
-
-  │   └── main.css
-
-  ├── scripts/
-
-  │   └── main.js
- 
-  ├── data/
-
-  │   └── events.json
-
-  ├── db/
-
-  │   └── events.db
-
-  ├── README.md
-
-  └── tailwind.config.js
-
 ## Licence
 Le projet 1337meets est actuellement sous licence MIT, ce qui permet à toute personne de l'utiliser, de le modifier et de le redistribuer librement.
 
